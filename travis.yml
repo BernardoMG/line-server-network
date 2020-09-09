@@ -3,4 +3,4 @@ language: ruby
 rvm:
   - 2.6.5
 
-script: bundle exec rspec
+script: cd app/ && bundle exec rspec

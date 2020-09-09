@@ -1,5 +1,7 @@
 # Line Server Network
 
+1. How to build and run the application:
+
 ## Answers to questions
 
 ### How does your system work?

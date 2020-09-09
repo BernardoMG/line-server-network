@@ -4,4 +4,4 @@ rvm:
   - 2.6.5
 
 install: cd app/ && bundle install
-script: cd app/ && bundle exec rspec
+script: bundle exec rspec

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/BernardoMG/line-server-network.svg?branch=master)](https://travis-ci.com/BernardoMG/line-server-network)
+
 # Line Server Network
 
 1. How to build and run the application:

@@ -5,7 +5,7 @@ class FileManager
     @line_counter = 0
   end
 
-  def collect_byte_offsets_of_each_line
+  def collect_byte_offsets_for_each_line
     file = File.open(@filename)
     file.rewind
     @byte_indexes[0] = 0
@@ -13,8 +13,6 @@ class FileManager
     file.each_line do |line|
       @byte_indexes.push(file.tell)
       @line_counter += 1
-      # puts "Line nr #{line_counter}: #{line}"
-      # puts "Bytes: #{@byte_indexes}"
     end
   end
 

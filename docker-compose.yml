@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  web:
+    build: ./app
+    environment: 
+      - WEB_CONCURRENCY=2
+      - THREAD_COUNT=5
+      - PORT=3000
+      - RACK_ENV=development
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: bundle exec ruby app.rb
+    links:
+      - "redis"
+    stdin_open: true
+    tty: true
+  redis:
+    image: redis
+    stdin_open: true
+    tty: true
+    ports:
+      - '6379:6379'
+    volumes:
+      - './redis_data:/data'
+    command: redis-server
+  test:
+    build: ./app
+    environment: 
+      - RACK_ENV=test
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: bundle exec rspec spec

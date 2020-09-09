@@ -4,7 +4,7 @@ require 'file_manager'
 RSpec.describe FileManager do 
   before(:all) do
     @file_manager = FileManager.new('spec/data/random_file.txt')
-    @file_manager.collect_byte_offsets_of_each_line
+    @file_manager.collect_byte_offsets_for_each_line
   end
 
   it 'returns the requested line' do

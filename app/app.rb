@@ -5,8 +5,10 @@ require 'byebug'
 set :port, 8080
 set :bind, '0.0.0.0'
 
+configure { set :server, :puma }
+
 manager = FileManager.new
-manager.collect_byte_offsets_of_each_line
+manager.collect_byte_offsets_for_each_line
 
 get '/lines/:index' do
   content_type :json

@@ -41,7 +41,7 @@ After process the entire text file, the clients can start sending requests and t
 The application can also return a 500 status code with a proper error message if something happens that is not expected.
 
 ### 2. How will your system perform with a 1 GB file? a 10 GB file? a 100 GB file?
-The larger the file gets, the slower it starts. This affects mainly the application boot process, i.e. collecting the byte offset of each line. I'd need to perform benchmarks and see if the application has the desired performance. **One of my focus was to gather the most efficient way to perform I/O operations in Ruby.**
+The larger the file gets, the slower it starts 🚨. This affects mainly the application boot process, i.e. collecting the byte offset of each line. I'd need to perform benchmarks and see if the application has the desired performance. **One of my focus was to gather the most efficient way to perform I/O operations in Ruby.**
 
 A **quick improvement** would be to split the file into smaller chunks and then parallelize the process. I'd use [Sidekiq Pro](https://github.com/mperham/sidekiq) because I've lots of experience with it and it's super efficient.
 

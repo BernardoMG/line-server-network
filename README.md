@@ -4,14 +4,14 @@
 
 This is my solution for the [Line Server Problem](https://salsify.github.io/line-server.html) implemented in Ruby (2.6.5), using Sinatra framework.
 
-1. How to **build** and **run** the application:
+1. How to **build** and **run** the application 🚀:
 
 ```shell
 sh build.sh
 sh run.sh
 ```
 
-2. How to run the tests:
+2. How to run the tests ✅:
 
 ```shell
 cd app/

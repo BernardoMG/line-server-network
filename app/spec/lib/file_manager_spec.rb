@@ -8,25 +8,33 @@ RSpec.describe FileManager do
   end
 
   it 'returns the requested line' do
-    result = @file_manager.retrieve_line_from_file(2)
+    line = @file_manager.retrieve_line_from_file(2)
 
-    expect(result[:success]).to be true
-    expect(result[:line]).to eq("TDAeFw0xOTA4MzExOTQ0NDdaFw0yOTA4MjgxOTQ0NDdaMA0xCzAJBgNVBAYTAlBM\n")
+    expect(line).to eq("TDAeFw0xOTA4MzExOTQ0NDdaFw0yOTA4MjgxOTQ0NDdaMA0xCzAJBgNVBAYTAlBM\n")
   end
 
-  it 'returns error due to invalid line' do
-    result = @file_manager.retrieve_line_from_file(0)
+  it 'should collect all byte offsets' do
+    # file has 44 lines
+    line = @file_manager.retrieve_line_from_file(44)
 
-    expect(result[:success]).to be false
-    expect(result[:message]).to eq('Invalid parameter.')
-    expect(result[:status]).to eq(422)
+    expect(line).to eq("1K77y7FOJPh3vIikjSwV04jMnrC8zxoYDHDTIbdh1raQTjT44AQoumYlwzXjA8aO")
   end
 
-  it 'returns error due to a request for a line beyond the end of the file' do
-    result = @file_manager.retrieve_line_from_file(1000)
+  it 'returns invalid line number for 0 value' do
+    result = @file_manager.invalid_line_number?(0)
 
-    expect(result[:success]).to be false
-    expect(result[:message]).to eq('Requested line is beyond the end of the file.')
-    expect(result[:status]).to eq(413)
+    expect(result).to be true
+  end
+
+  it 'returns valid line number' do
+    result = @file_manager.line_number_beyond_the_end_of_the_file?(5)
+
+    expect(result).to be false
+  end
+
+  it 'returns invalid when line number is beyond the end of the file' do
+    result = @file_manager.line_number_beyond_the_end_of_the_file?(10000)
+
+    expect(result).to be true
   end
 end

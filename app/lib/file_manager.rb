@@ -17,27 +17,16 @@ class FileManager
   end
 
   def retrieve_line_from_file(line_number)
-    if line_number.positive?
-      if valid_line_number?(line_number)
-        line = read_line_from_file(line_number)
-        return { success: true, line: line }
-      else
-        return { success: false, message: 'Requested line is beyond the end of the file.', status: 413 }
-      end
-    else
-      return { success: false, message: 'Invalid parameter.', status: 422 }
-    end
-  end
-
-  private
-
-  def valid_line_number?(line_number)
-    line_number <= @line_counter
-  end
-
-  def read_line_from_file(line_number)
     previous_line_byte_offset = @byte_indexes[line_number - 1]
     byte_interval_requested = @byte_indexes[line_number] - previous_line_byte_offset
     IO.binread(@filename, byte_interval_requested, previous_line_byte_offset)
+  end
+
+  def invalid_line_number?(line_number)
+    !(line_number.positive? && line_number <= @line_counter)
+  end
+
+  def line_number_beyond_the_end_of_the_file?(line_number)
+    line_number > @line_counter
   end
 end 

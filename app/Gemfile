@@ -3,10 +3,11 @@
 source "https://rubygems.org"
 
 gem "sinatra"
-gem "byebug"
 gem "puma"
 gem "redis"
 
 group :test do
+  gem "byebug"
   gem "rspec"
+  gem "mock_redis"
 end

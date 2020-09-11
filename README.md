@@ -4,7 +4,7 @@
 
 This is my solution for the [Line Server Problem](https://salsify.github.io/line-server.html) implemented in Ruby (2.6.5), using Sinatra framework.
 
-1. How to build and run the application:
+1. How to **build** and **run** the application:
 
 ```shell
 sh build.sh
@@ -23,14 +23,14 @@ rspec
 ## Answers to questions
 
 ### 1. How does your system work?
-At startup the application proccess the entire text file and creates an in-memory array, where each index represents the byte offset of each line (i.e. [0, 65, ...]). Since, we go through each line, we also save the number of lines of the file, usefull when the client requests a line number that is beyond the end of the file. A Redis server is also launch during boot for cache purposes (check docker-compose.yml).
+At startup the application process the entire text file and creates an in-memory array, where each index represents the byte offset of each line (i.e. [0, 65, ...]). Since, we go through each line, we also save the number of lines of the file, usefull when the client requests a line number that is beyond the end of the file. A Redis server is also launch during boot for cache purposes (check **docker-compose.yml**).
 
-After proccess the entire text file, the clients can start sending requests and the code flow is the following:
+After process the entire text file, the clients can start sending requests and the code flow is the following:
 
 1. Checks if the line is already in cache. 
 2. If cached, returns it to the client with a 200 status code.
-3. If not, an interactor ([Interactor?What?](https://goiabada.blog/interactors-in-ruby-easy-as-cake-simple-as-pie-33f66de2eb78)) called **LineRetriever** takes place and tries to collect the requested line considering it's byte offset.
-4. In the end, if the **LineRetriever** returns the requested line, it's store in our cache.
+3. If not, an interactor ([Interactor? What?](https://goiabada.blog/interactors-in-ruby-easy-as-cake-simple-as-pie-33f66de2eb78)) called **LineRetriever** takes place and tries to collect the requested line considering it's byte offset.
+4. In the end, if the **LineRetriever** returns the requested line, it's stored in our cache for future requests.
 
 **LineRetriever** can return 3 diferrent responses:
 
@@ -41,7 +41,13 @@ After proccess the entire text file, the clients can start sending requests and 
 The application can also return a 500 status code with a proper error message if something happens that is not expected.
 
 ### 2. How will your system perform with a 1 GB file? a 10 GB file? a 100 GB file?
-- paralelize the process
+The larger the file gets, the slower it starts. This affects mainly the application boot process, i.e. collecting the byte offset of each line. I'd need to perform benchmarks and see if the application has the desired performance. **One of my focus was to gather the most efficient way to perform I/O operations in Ruby.**
+
+A **quick improvement** would be to split the file into smaller chunks and then parallelize the process. I'd use [Sidekiq Pro](https://github.com/mperham/sidekiq) because I've lots of experience with it and it's super efficient.
+
+In this idea, each worker would be responsable for process one chunk and collect the byte offset of each line. Then, each worker would send that information to an Orchestractor (i.e. using for example [RabbitMQ](https://www.rabbitmq.com/) in a pub/sub paradigm) responsable for organizing the data struture with all byte offsets.
+
+In the end, I'd need to find a sweet spot between performance and number of workers (chunks).
 
 ### 3. How will your system perform with 100 users? 10000 users? 1000000 users?
 - passenger

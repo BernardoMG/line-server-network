@@ -1,6 +1,6 @@
 require 'sinatra'
 require './lib/file_manager'
-require './lib/line_retriever'
+require './interactors/line_retriever'
 
 set :port, 8080
 set :bind, '0.0.0.0'

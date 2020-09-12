@@ -75,6 +75,7 @@ In addition, I provided a Dockerfile which means that we can easily deploy the a
 
 
 ### 5. What third-party libraries or other tools does the system use? How did you choose each library or framework you used?
+I chose Sinatra framework because 
 
 ### 6. How long did you spend on this exercise? If you had unlimited more time to spend on this, how would you spend it and how would you prioritize each item?
 I spend about 6h on this challenge mainly doing lots of planning and research around I/O operations in Ruby and, out-of-the-box solutions and algorithms to read a big text/log file.
@@ -86,6 +87,8 @@ If I had unlimited time to spend on this challenge I would (by order):
 3. improve cache
 
 ### 7. If you were to critique your code, what would you have to say about it?
+Since I don't have much experience with Sinatra framework probably the files organization is not the best one and I couldn't add test for the "controller" file using 
+
 - sinatra estructure
 - controller tests (rack test)
 

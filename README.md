@@ -50,19 +50,36 @@ In this idea, each worker would be responsable for process one chunk and collect
 In the end, I'd need to find a sweet spot between performance and number of workers (chunks).
 
 ### 3. How will your system perform with 100 users? 10000 users? 1000000 users?
+For this challenge and considering that it runs on development environment, I choose Puma server which is the default server of Sinatra framework. As requested, the server would need to support multiple simultaneous clients, so I set Puma with 2 workers and 5 threads each. 
+
+However, for production environment I'd choose Passenger 
 - passenger
 - deploy env (docker)
+- cloud solution
+- scale horizontaly
 
 ### 4. What documentation, websites, papers, etc did you consult in doing this assignment?
+- [Ruby Docs](https://ruby-doc.org/core-2.6.5/)
+- [Puma Gem Docs](https://github.com/puma/puma)
+- [Redis Gem Docs](https://github.com/redis/redis-rb)
+- [Sinatra Docs](http://sinatrarb.com/)
+- 
+- Several Stackoverflow threads about I/O operations in Ruby
+
 
 ### 5. What third-party libraries or other tools does the system use? How did you choose each library or framework you used?
 
 ### 6. How long did you spend on this exercise? If you had unlimited more time to spend on this, how would you spend it and how would you prioritize each item?
-- improve cache
-- paralelize boot
-- another algorithm 
+I spend about 6h on this challenge mainly doing lots of planning and research around I/O operations in Ruby and, out-of-the-box solutions and algorithms to read a big text/log file.
+
+If I had unlimited time to spend on this challenge I would (by order):
+
+1. paralelize boot
+2. another algorithm and perform benchmarks
+3. improve cache
 
 ### 7. If you were to critique your code, what would you have to say about it?
-
+- sinatra estructure
+- controller tests (rack test)
 
 https://www.researchgate.net/publication/275543701_An_Efficient_Log_File_Analysis_Algorithm_Using_Binary-based_Data_Structure

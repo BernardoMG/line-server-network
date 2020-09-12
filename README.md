@@ -23,7 +23,7 @@ rspec
 ## Answers to questions
 
 ### 1. How does your system work?
-At startup the application process the entire text file and creates an in-memory array, where each index represents the byte offset of each line (i.e. [0, 65, ...]). Since, we go through each line, we also save the number of lines of the file, usefull when the client requests a line number that is beyond the end of the file. A Redis server is also launch during boot for cache purposes (check **docker-compose.yml**).
+At startup the application process the entire text file and creates an in-memory array, where each index represents the byte offset of each line (i.e. [0, 65, ...]). Since, we go through each line, we also save the number of lines of the file to validate if the requested line is beyond the end of the file. A Redis server is also launch during boot for cache purposes (check **docker-compose.yml**).
 
 After process the entire text file, the clients can start sending requests and the code flow is the following:
 
@@ -54,7 +54,7 @@ In the end, I'd need to find a sweet spot between performance and number of work
 ### 3. How will your system perform with 100 users? 10000 users? 1000000 users?
 For this challenge and considering that it runs on development environment, I chose [Puma](https://github.com/puma/puma) which is the default server of Sinatra framework. As requested, the server would need to support multiple simultaneous clients, so I set Puma with 2 workers and 5 threads. However, for a production environment I'd choose Passenger because it's more robust and it'd provide the desired performance when dealing with heavy load and multiple concorrent requests.
 
-In addition, I provided a Dockerfile which means that we can easily deploy the application in any cloud solution with horizontaly scaling. So, we'd choose the number of containers that we want to launch and configure an auto-scaler especially useful for peek hours. 
+In addition, I provided a Dockerfile which means that we can easily deploy the application in any cloud solution with horizontaly scaling. So, we'd choose the number of containers that we want to launch and configure an auto-scaler especially useful for peek hours (lots of requests/users). 
 
 
 ### 4. What documentation, websites, papers, etc did you consult in doing this assignment?
@@ -75,21 +75,28 @@ In addition, I provided a Dockerfile which means that we can easily deploy the a
 
 
 ### 5. What third-party libraries or other tools does the system use? How did you choose each library or framework you used?
-I chose Sinatra framework because 
+So, I used **Sinatra** framework with **Puma** and **Redis** to handle cache. For debug purposes, I usually use **[byebug](https://github.com/deivid-rodriguez/byebug)** and for tests I used **[Rspec](https://rspec.info/)**.  
+
+I chose Sinatra framework because it's a very lightweight framework and even though I don't have much experience with it and always wanted to try it and explore a little more. So, I thought it would be the perfect opportunity. The alternative would be to use Rails in API mode.
+
 
 ### 6. How long did you spend on this exercise? If you had unlimited more time to spend on this, how would you spend it and how would you prioritize each item?
 I spend about 6h on this challenge mainly doing lots of planning and research around I/O operations in Ruby and, out-of-the-box solutions and algorithms to read a big text/log file.
 
 If I had unlimited time to spend on this challenge I would (by order):
 
-1. paralelize boot
-2. another algorithm and perform benchmarks
-3. improve cache
+1. Parallelize the byte offset read process as described in my answer to question nr 2.
+2. Implement a different version of the challenge using 
+
+3. Improve cache by creating a GC to delete keys that 
+4. Increase test coverage to 100%.
 
 ### 7. If you were to critique your code, what would you have to say about it?
-Since I don't have much experience with Sinatra framework probably the files organization is not the best one and I couldn't add test for the "controller" file using 
+Since I don't have much experience with Sinatra framework probably the files/folders directory is not the best. Also, I couldn't add tests for the "controller" file using a library called [Rack Test](https://github.com/rack/rack-test) because 
 
 - sinatra estructure
 - controller tests (rack test)
-
-https://www.researchgate.net/publication/275543701_An_Efficient_Log_File_Analysis_Algorithm_Using_Binary-based_Data_Structure
+- Code well encapsulated 
+- Several unit tests
+- Easy to read and understand
+- Docker and travis

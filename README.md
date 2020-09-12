@@ -30,7 +30,7 @@ After process the entire text file, the clients can start sending requests and t
 1. Checks if the line is already in cache. 
 2. If cached, returns it to the client with a 200 status code.
 3. If not, an interactor ([Interactor? What?](https://goiabada.blog/interactors-in-ruby-easy-as-cake-simple-as-pie-33f66de2eb78)) called **LineRetriever** takes place and tries to collect the requested line considering it's byte offset.
-4. In the end, if the **LineRetriever** returns the requested line, it's stored in our cache for future requests.
+4. In the end, if the application is able to return the requested line, it'll store it in our cache for future requests.
 
 **LineRetriever** can return 3 diferrent responses:
 
@@ -49,21 +49,28 @@ In this idea, each worker would be responsable for process one chunk and collect
 
 In the end, I'd need to find a sweet spot between performance and number of workers (chunks).
 
-### 3. How will your system perform with 100 users? 10000 users? 1000000 users?
-For this challenge and considering that it runs on development environment, I choose Puma server which is the default server of Sinatra framework. As requested, the server would need to support multiple simultaneous clients, so I set Puma with 2 workers and 5 threads each. 
+#### Note: I didn't implement this improvement due to time constraints.
 
-However, for production environment I'd choose Passenger 
-- passenger
-- deploy env (docker)
-- cloud solution
-- scale horizontaly
+### 3. How will your system perform with 100 users? 10000 users? 1000000 users?
+For this challenge and considering that it runs on development environment, I chose [Puma](https://github.com/puma/puma) which is the default server of Sinatra framework. As requested, the server would need to support multiple simultaneous clients, so I set Puma with 2 workers and 5 threads. However, for a production environment I'd choose Passenger because it's more robust and it'd provide the desired performance when dealing with heavy load and multiple concorrent requests.
+
+In addition, I provided a Dockerfile which means that we can easily deploy the application in any cloud solution with horizontaly scaling. So, we'd choose the number of containers that we want to launch and configure an auto-scaler especially useful for peek hours. 
+
 
 ### 4. What documentation, websites, papers, etc did you consult in doing this assignment?
 - [Ruby Docs](https://ruby-doc.org/core-2.6.5/)
 - [Puma Gem Docs](https://github.com/puma/puma)
 - [Redis Gem Docs](https://github.com/redis/redis-rb)
 - [Sinatra Docs](http://sinatrarb.com/)
-- 
+- I/O operations in Ruby:
+  - [Under the Hood: “Slurping” and Streaming Files in Ruby](https://blog.appsignal.com/2018/07/10/ruby-magic-slurping-and-streaming-files.html)
+  - [Parsing large log files with ruby](http://smyck.net/2011/02/12/parsing-large-logfiles-with-ruby/)
+  - [Optimal way of processing large files in Ruby](https://felipeelias.github.io/ruby/2017/01/02/fast-file-processing-ruby.html)
+  - [HowTo: Working efficiently with large files in Ruby](https://tjay.dev/howto-working-efficiently-with-large-files-in-ruby/)
+  - [Searching Algorithms](https://www.geeksforgeeks.org/searching-algorithms/)
+- Searching Algorithms
+  - [An Efficient Log File Analysis Algorithm Using Binary-based Data Structure](https://www.researchgate.net/publication/275543701_An_Efficient_Log_File_Analysis_Algorithm_Using_Binary-based_Data_Structure)
+  - [Searching Algorithms](https://www.geeksforgeeks.org/searching-algorithms/)
 - Several Stackoverflow threads about I/O operations in Ruby
 
 

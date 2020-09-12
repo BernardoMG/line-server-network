@@ -7,7 +7,6 @@ class FileManager
 
   def collect_byte_offsets_for_each_line
     file = File.open(@filename)
-    file.rewind
     @byte_indexes[0] = 0
 
     file.each_line do |line|

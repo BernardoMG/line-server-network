@@ -88,6 +88,7 @@ If I had unlimited time to spend on this challenge I would (by order):
 2. Implement a different version of the challenge using a search algorithm and then perform benchmarks to decide which solution would be the best for us. Probably, I would try an approach considering the proccess described in this [paper](https://www.researchgate.net/publication/275543701_An_Efficient_Log_File_Analysis_Algorithm_Using_Binary-based_Data_Structure) and classical search algorithms. 
 3. Improve cache by creating a GC (maybe a cron job on Sidekiq) to delete keys which hasn't been accessed in a while (e.g. 5 days). This would prevent a constant growth of Redis storage. 
 4. Increase test coverage to 100%.
+5. API documentation and application logs.
 
 ### 7. If you were to critique your code, what would you have to say about it?
 Since I don't have much experience with Sinatra framework probably the files/folders directory is not the best. Also, I couldn't add tests for the "controller" file using a library called [Rack Test](https://github.com/rack/rack-test) because I'd need to change how the application boots and the main directory. However, I think the code is well encapsulated, easy to read and understand by any software engineer. The application has several unit tests, runs using Docker and on my Github repository, Travis CI runs the tests automatically on every commit to make sure everything's right.

@@ -92,3 +92,5 @@ If I had unlimited time to spend on this challenge I would (by order):
 
 ### 7. If you were to critique your code, what would you have to say about it?
 Since I don't have much experience with Sinatra framework probably the files/folders directory is not the best. Also, I couldn't add tests for the "controller" file using a library called [Rack Test](https://github.com/rack/rack-test) because I'd need to change how the application boots and the main directory. However, I think the code is well encapsulated, easy to read and understand by any software engineer. The application has several unit tests, runs using Docker and on my Github repository, Travis CI runs the tests automatically on every commit to make sure everything's right.
+
+Cheers 🤘🏼

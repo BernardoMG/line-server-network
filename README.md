@@ -15,6 +15,7 @@ sh run.sh
 
 ```shell
 cd app/
+bundle install
 rspec
 ```
 
